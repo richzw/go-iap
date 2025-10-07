@@ -17,7 +17,8 @@ const (
 	SubscriptionNotificationTypePauseScheduleChanged
 	SubscriptionNotificationTypeRevoked
 	SubscriptionNotificationTypeExpired
-	SubscriptionNotificationTypePendingPurchaseCancelled = iota + 7
+	SubscriptionNotificationTypePendingPurchaseCancelled  = iota + 7
+	SubscriptionNotificationTypePriceStepUpConsentUpdated = iota + 8
 )
 
 // https://developer.android.com/google/play/billing/rtdn-reference#one-time
