@@ -343,3 +343,19 @@ const (
 type UpdateAppAccountTokenRequest struct {
 	AppAccountToken string `json:"appAccountToken"`
 }
+
+type AppTransactionInfoResponse struct {
+	SignedAppTransactionInfo string `json:"signedAppTransactionInfo"`
+}
+
+type JWSAppTransactionDecodedPayload struct {
+	AppAppleId                 int64       `json:"appAppleId"`
+	AppTransactionId           string      `json:"appTransactionId"`
+	BundleId                   string      `json:"bundleId"`
+	OriginalApplicationVersion string      `json:"originalApplicationVersion"`
+	OriginalPlatform           string      `json:"originalPlatform"`
+	OriginalPurchaseDate       int64       `json:"originalPurchaseDate"`
+	PreorderDate               int64       `json:"preorderDate,omitempty"`
+	ReceiptCreationDate        int64       `json:"receiptCreationDate"`
+	ReceiptType                Environment `json:"receiptType"`
+}

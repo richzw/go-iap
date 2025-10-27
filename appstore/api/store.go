@@ -37,6 +37,7 @@ const (
 	PathRequestTestNotification             = "/inApps/v1/notifications/test"
 	PathGetTestNotificationStatus           = "/inApps/v1/notifications/test/{testNotificationToken}"
 	PathSetAppAccountToken                  = "/inApps/v1/transactions/{originalTransactionId}/appAccountToken"
+	PathGetAppTransactionInfo               = "/inApps/v1/transactions/appTransactions/{transactionId}"
 )
 
 type StoreConfig struct {
@@ -71,6 +72,7 @@ type (
 		GetTransactionHistory(ctx context.Context, transactionId string, query *url.Values) (responses []*HistoryResponse, err error)
 		GetTransactionInfo(ctx context.Context, transactionId string) (rsp *TransactionInfoResponse, err error)
 		LookupOrderID(ctx context.Context, orderId string) (rsp *OrderLookupResponse, err error)
+		GetAppTransactionInfo(ctx context.Context, transactionId string) (rsp *AppTransactionInfoResponse, err error)
 	}
 
 	SubscriptionExtender interface {
@@ -239,6 +241,28 @@ func (a *StoreClient) GetTransactionHistory(ctx context.Context, transactionId s
 // GetTransactionInfo https://developer.apple.com/documentation/appstoreserverapi/get_transaction_info
 func (a *StoreClient) GetTransactionInfo(ctx context.Context, transactionId string) (rsp *TransactionInfoResponse, err error) {
 	URL := a.host + PathTransactionInfo
+	URL = strings.Replace(URL, "{transactionId}", transactionId, -1)
+
+	statusCode, body, err := a.Do(ctx, http.MethodGet, URL, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if statusCode != http.StatusOK {
+		return nil, fmt.Errorf("appstore api: %v return status code %v", URL, statusCode)
+	}
+
+	err = json.Unmarshal(body, &rsp)
+	if err != nil {
+		return nil, err
+	}
+
+	return
+}
+
+// GetAppTransactionInfo https://developer.apple.com/documentation/appstoreserverapi/get-app-transaction-info
+func (a *StoreClient) GetAppTransactionInfo(ctx context.Context, transactionId string) (rsp *AppTransactionInfoResponse, err error) {
+	URL := a.host + PathGetAppTransactionInfo
 	URL = strings.Replace(URL, "{transactionId}", transactionId, -1)
 
 	statusCode, body, err := a.Do(ctx, http.MethodGet, URL, nil)
