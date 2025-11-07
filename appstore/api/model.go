@@ -176,6 +176,7 @@ const (
 	OfferDiscountTypeFreeTrial  OfferDiscountType = "FREE_TRIAL"
 	OfferDiscountTypePayAsYouGo OfferDiscountType = "PAY_AS_YOU_GO"
 	OfferDiscountTypePayUpFront OfferDiscountType = "PAY_UP_FRONT"
+	OfferDiscountTypeOneTime    OfferDiscountType = "ONE_TIME"
 )
 
 // Verify that JWSTransaction implements jwt.Claims
