@@ -84,6 +84,45 @@ func (mr *MockIABProductMockRecorder) VerifyProduct(arg0, arg1, arg2, arg3 any) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VerifyProduct", reflect.TypeOf((*MockIABProduct)(nil).VerifyProduct), arg0, arg1, arg2, arg3)
 }
 
+// MockIABProductV2 is a mock of IABProductV2 interface.
+type MockIABProductV2 struct {
+	ctrl     *gomock.Controller
+	recorder *MockIABProductV2MockRecorder
+	isgomock struct{}
+}
+
+// MockIABProductMockRecorder is the mock recorder for MockIABProduct.
+type MockIABProductV2MockRecorder struct {
+	mock *MockIABProductV2
+}
+
+// NewMockIABProductV2 creates a new mock instance.
+func NewMockIABProductV2(ctrl *gomock.Controller) *MockIABProductV2 {
+	mock := &MockIABProductV2{ctrl: ctrl}
+	mock.recorder = &MockIABProductV2MockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIABProductV2) EXPECT() *MockIABProductV2MockRecorder {
+	return m.recorder
+}
+
+// VerifyProduct mocks base method.
+func (m *MockIABProductV2) VerifyProductV2(arg0 context.Context, arg1, arg2 string) (*androidpublisher.ProductPurchaseV2, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "VerifyProductV2", arg0, arg1, arg2)
+	ret0, _ := ret[0].(*androidpublisher.ProductPurchaseV2)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// VerifyProduct indicates an expected call of VerifyProduct.
+func (mr *MockIABProductMockRecorder) VerifyProductV2(arg0, arg1, arg2 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VerifyProductV2", reflect.TypeOf((*MockIABProductV2)(nil).VerifyProductV2), arg0, arg1, arg2)
+}
+
 // MockIABSubscription is a mock of IABSubscription interface.
 type MockIABSubscription struct {
 	ctrl     *gomock.Controller

@@ -163,6 +163,22 @@ func TestVerifyProduct(t *testing.T) {
 	// TODO Normal scenario
 }
 
+func TestVerifyProductV2(t *testing.T) {
+	t.Parallel()
+	// Exception scenario
+	expected := "googleapi: Error 404: No application was found for the given package name., applicationNotFound"
+
+	client, _ := New(jsonKey)
+	ctx := context.Background()
+	_, err := client.VerifyProductV2(ctx, "package", "purchaseToken")
+
+	if err == nil || err.Error() != expected {
+		t.Errorf("got %v", err)
+	}
+
+	// TODO Normal scenario
+}
+
 func TestAcknowledgeProduct(t *testing.T) {
 	t.Parallel()
 	// Exception scenario

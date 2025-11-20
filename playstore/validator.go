@@ -11,11 +11,10 @@ import (
 	"net/http"
 	"time"
 
-	"google.golang.org/api/option"
-
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/androidpublisher/v3"
+	"google.golang.org/api/option"
 )
 
 //go:generate mockgen  -destination=mocks/playstore.go -package=mocks github.com/awa/go-iap/playstore IABProduct,IABSubscription,IABSubscriptionV2,IABMonetization
@@ -25,6 +24,11 @@ type IABProduct interface {
 	VerifyProduct(context.Context, string, string, string) (*androidpublisher.ProductPurchase, error)
 	AcknowledgeProduct(context.Context, string, string, string, string) error
 	ConsumeProduct(context.Context, string, string, string) error
+}
+
+// The IABProductV2 type is an interface for productV2 service
+type IABProductV2 interface {
+	VerifyProductV2(context.Context, string, string) (*androidpublisher.ProductPurchaseV2, error)
 }
 
 // The IABSubscription type is an interface  for subscription service
@@ -179,6 +183,17 @@ func (c *Client) VerifyProduct(
 	ps := androidpublisher.NewPurchasesProductsService(c.service)
 	result, err := ps.Get(packageName, productID, token).Context(ctx).Do()
 
+	return result, err
+}
+
+// VerifyProductV2 Checks the purchase and consumption status of an inapp item.
+func (c *Client) VerifyProductV2(
+	ctx context.Context,
+	packageName string,
+	token string,
+) (*androidpublisher.ProductPurchaseV2, error) {
+	ps := androidpublisher.NewPurchasesProductsv2Service(c.service)
+	result, err := ps.Getproductpurchasev2(packageName, token).Context(ctx).Do()
 	return result, err
 }
 
