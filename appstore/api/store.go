@@ -29,6 +29,7 @@ const (
 	PathTransactionInfo                     = "/inApps/v1/transactions/{transactionId}"
 	PathRefundHistory                       = "/inApps/v2/refund/lookup/{originalTransactionId}"
 	PathGetALLSubscriptionStatus            = "/inApps/v1/subscriptions/{originalTransactionId}"
+	PathConsumptionInfoV2                   = "/inApps/v2/transactions/consumption/{transactionId}"
 	PathConsumptionInfo                     = "/inApps/v1/transactions/consumption/{originalTransactionId}"
 	PathExtendSubscriptionRenewalDate       = "/inApps/v1/subscriptions/extend/{originalTransactionId}"
 	PathExtendSubscriptionRenewalDateForAll = "/inApps/v1/subscriptions/extend/mass/"
@@ -98,6 +99,7 @@ type (
 
 	ConsumptionSender interface {
 		SendConsumptionInfo(ctx context.Context, originalTransactionId string, body ConsumptionRequestBody) (statusCode int, err error)
+		SendConsumptionInfoV2(ctx context.Context, transactionId string, body ConsumptionRequest) (statusCode int, err error)
 	}
 
 	AppAccountSetter interface {
@@ -321,10 +323,28 @@ func (a *StoreClient) GetRefundHistory(ctx context.Context, originalTransactionI
 	return
 }
 
-// SendConsumptionInfo https://developer.apple.com/documentation/appstoreserverapi/send_consumption_information
+// https://developer.apple.com/documentation/appstoreserverapi/send-consumption-information-v1
 func (a *StoreClient) SendConsumptionInfo(ctx context.Context, originalTransactionId string, body ConsumptionRequestBody) (statusCode int, err error) {
 	URL := a.host + PathConsumptionInfo
 	URL = strings.Replace(URL, "{originalTransactionId}", originalTransactionId, -1)
+
+	bodyBuf := new(bytes.Buffer)
+	err = json.NewEncoder(bodyBuf).Encode(body)
+	if err != nil {
+		return 0, err
+	}
+
+	statusCode, _, err = a.Do(ctx, http.MethodPut, URL, bodyBuf)
+	if err != nil {
+		return statusCode, err
+	}
+	return statusCode, nil
+}
+
+// SendConsumptionInfoV2 https://developer.apple.com/documentation/appstoreserverapi/send-consumption-information
+func (a *StoreClient) SendConsumptionInfoV2(ctx context.Context, transactionId string, body ConsumptionRequest) (statusCode int, err error) {
+	URL := a.host + PathConsumptionInfoV2
+	URL = strings.Replace(URL, "{transactionId}", transactionId, -1)
 
 	bodyBuf := new(bytes.Buffer)
 	err = json.NewEncoder(bodyBuf).Encode(body)
