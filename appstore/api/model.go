@@ -93,7 +93,7 @@ const (
 // ConsumptionRequestBody https://developer.apple.com/documentation/appstoreserverapi/consumptionrequest
 type ConsumptionRequest struct {
 	CustomerConsented     bool             `json:"customerConsented"`
-	ConsumptionPercentage int32            `json:"consumptionPercentage"`
+	ConsumptionPercentage *int32           `json:"consumptionPercentage,omitempty"`
 	DeliveryStatus        DeliveryStatus   `json:"deliveryStatus"`
 	RefundPreference      RefundPreference `json:"refundPreference"`
 	SampleContentProvided bool             `json:"sampleContentProvided"`
