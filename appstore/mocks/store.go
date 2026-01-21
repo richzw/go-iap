@@ -45,9 +45,9 @@ func (m *MockStoreAPIClient) EXPECT() *MockStoreAPIClientMockRecorder {
 }
 
 // Do mocks base method.
-func (m *MockStoreAPIClient) Do(ctx context.Context, method, url string, body io.Reader) (int, []byte, error) {
+func (m *MockStoreAPIClient) Do(ctx context.Context, method, arg2 string, body io.Reader) (int, []byte, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Do", ctx, method, url, body)
+	ret := m.ctrl.Call(m, "Do", ctx, method, arg2, body)
 	ret0, _ := ret[0].(int)
 	ret1, _ := ret[1].([]byte)
 	ret2, _ := ret[2].(error)
@@ -55,9 +55,9 @@ func (m *MockStoreAPIClient) Do(ctx context.Context, method, url string, body io
 }
 
 // Do indicates an expected call of Do.
-func (mr *MockStoreAPIClientMockRecorder) Do(ctx, method, url, body any) *gomock.Call {
+func (mr *MockStoreAPIClientMockRecorder) Do(ctx, method, arg2, body any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Do", reflect.TypeOf((*MockStoreAPIClient)(nil).Do), ctx, method, url, body)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Do", reflect.TypeOf((*MockStoreAPIClient)(nil).Do), ctx, method, arg2, body)
 }
 
 // ExtendSubscriptionRenewalDate mocks base method.
@@ -118,6 +118,21 @@ func (m *MockStoreAPIClient) GetAllNotificationHistory(ctx context.Context, body
 func (mr *MockStoreAPIClientMockRecorder) GetAllNotificationHistory(ctx, body, duration any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllNotificationHistory", reflect.TypeOf((*MockStoreAPIClient)(nil).GetAllNotificationHistory), ctx, body, duration)
+}
+
+// GetAppTransactionInfo mocks base method.
+func (m *MockStoreAPIClient) GetAppTransactionInfo(ctx context.Context, transactionId string) (*api.AppTransactionInfoResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAppTransactionInfo", ctx, transactionId)
+	ret0, _ := ret[0].(*api.AppTransactionInfoResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAppTransactionInfo indicates an expected call of GetAppTransactionInfo.
+func (mr *MockStoreAPIClientMockRecorder) GetAppTransactionInfo(ctx, transactionId any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAppTransactionInfo", reflect.TypeOf((*MockStoreAPIClient)(nil).GetAppTransactionInfo), ctx, transactionId)
 }
 
 // GetNotificationHistory mocks base method.
@@ -183,18 +198,18 @@ func (mr *MockStoreAPIClientMockRecorder) GetTestNotificationStatus(ctx, testNot
 }
 
 // GetTransactionHistory mocks base method.
-func (m *MockStoreAPIClient) GetTransactionHistory(ctx context.Context, originalTransactionId string, query *url.Values) ([]*api.HistoryResponse, error) {
+func (m *MockStoreAPIClient) GetTransactionHistory(ctx context.Context, transactionId string, query *url.Values) ([]*api.HistoryResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTransactionHistory", ctx, originalTransactionId, query)
+	ret := m.ctrl.Call(m, "GetTransactionHistory", ctx, transactionId, query)
 	ret0, _ := ret[0].([]*api.HistoryResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetTransactionHistory indicates an expected call of GetTransactionHistory.
-func (mr *MockStoreAPIClientMockRecorder) GetTransactionHistory(ctx, originalTransactionId, query any) *gomock.Call {
+func (mr *MockStoreAPIClientMockRecorder) GetTransactionHistory(ctx, transactionId, query any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTransactionHistory", reflect.TypeOf((*MockStoreAPIClient)(nil).GetTransactionHistory), ctx, originalTransactionId, query)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTransactionHistory", reflect.TypeOf((*MockStoreAPIClient)(nil).GetTransactionHistory), ctx, transactionId, query)
 }
 
 // GetTransactionInfo mocks base method.
@@ -287,6 +302,21 @@ func (mr *MockStoreAPIClientMockRecorder) SendConsumptionInfo(ctx, originalTrans
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendConsumptionInfo", reflect.TypeOf((*MockStoreAPIClient)(nil).SendConsumptionInfo), ctx, originalTransactionId, body)
 }
 
+// SendConsumptionInfoV2 mocks base method.
+func (m *MockStoreAPIClient) SendConsumptionInfoV2(ctx context.Context, transactionId string, body api.ConsumptionRequest) (int, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SendConsumptionInfoV2", ctx, transactionId, body)
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SendConsumptionInfoV2 indicates an expected call of SendConsumptionInfoV2.
+func (mr *MockStoreAPIClientMockRecorder) SendConsumptionInfoV2(ctx, transactionId, body any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendConsumptionInfoV2", reflect.TypeOf((*MockStoreAPIClient)(nil).SendConsumptionInfoV2), ctx, transactionId, body)
+}
+
 // SendRequestTestNotification mocks base method.
 func (m *MockStoreAPIClient) SendRequestTestNotification(ctx context.Context) (int, []byte, error) {
 	m.ctrl.T.Helper()
@@ -301,4 +331,19 @@ func (m *MockStoreAPIClient) SendRequestTestNotification(ctx context.Context) (i
 func (mr *MockStoreAPIClientMockRecorder) SendRequestTestNotification(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendRequestTestNotification", reflect.TypeOf((*MockStoreAPIClient)(nil).SendRequestTestNotification), ctx)
+}
+
+// SetAppAccountToken mocks base method.
+func (m *MockStoreAPIClient) SetAppAccountToken(ctx context.Context, originalTransactionId string, body api.UpdateAppAccountTokenRequest) (int, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetAppAccountToken", ctx, originalTransactionId, body)
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetAppAccountToken indicates an expected call of SetAppAccountToken.
+func (mr *MockStoreAPIClientMockRecorder) SetAppAccountToken(ctx, originalTransactionId, body any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetAppAccountToken", reflect.TypeOf((*MockStoreAPIClient)(nil).SetAppAccountToken), ctx, originalTransactionId, body)
 }
