@@ -39,6 +39,7 @@ const (
 	PathGetTestNotificationStatus           = "/inApps/v1/notifications/test/{testNotificationToken}"
 	PathSetAppAccountToken                  = "/inApps/v1/transactions/{originalTransactionId}/appAccountToken"
 	PathGetAppTransactionInfo               = "/inApps/v1/transactions/appTransactions/{transactionId}"
+	PathFinishTransaction                   = "/inApps/v1/transactions/{transactionId}/finish"
 )
 
 type StoreConfig struct {
@@ -74,6 +75,7 @@ type (
 		GetTransactionInfo(ctx context.Context, transactionId string) (rsp *TransactionInfoResponse, err error)
 		LookupOrderID(ctx context.Context, orderId string) (rsp *OrderLookupResponse, err error)
 		GetAppTransactionInfo(ctx context.Context, transactionId string) (rsp *AppTransactionInfoResponse, err error)
+		FinishTransaction(ctx context.Context, transactionId string) (statusCode int, err error)
 	}
 
 	SubscriptionExtender interface {
@@ -503,6 +505,15 @@ func (a *StoreClient) SetAppAccountToken(ctx context.Context, originalTransactio
 		return statusCode, err
 	}
 	return statusCode, nil
+}
+
+// FinishTransaction https://developer.apple.com/documentation/appstoreserverapi/finish-transaction
+func (a *StoreClient) FinishTransaction(ctx context.Context, transactionId string) (statusCode int, err error) {
+	URL := a.host + PathFinishTransaction
+	URL = strings.Replace(URL, "{transactionId}", transactionId, -1)
+
+	statusCode, _, err = a.Do(ctx, http.MethodPost, URL, nil)
+	return
 }
 
 // ParseSignedTransactions parse the jws singed transactions
