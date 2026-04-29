@@ -150,6 +150,14 @@ type AdvancedCommerceRenewalInfo struct {
 	TaxCode            string                         `json:"taxCode"`
 }
 
+type RenewalCommitmentInfo struct {
+	CommitmentAutoRenewProductId     string          `json:"commitmentAutoRenewProductId"`
+	CommitmentAutoRenewStatus        int32           `json:"commitmentAutoRenewStatus"`
+	CommitmentRenewalBillingPlanType BillingPlanType `json:"commitmentRenewalBillingPlanType"`
+	CommitmentRenewalDate            int64           `json:"commitmentRenewalDate"`
+	CommitmentRenewalPrice           int64           `json:"commitmentRenewalPrice"`
+}
+
 // Verify that JWSRenewalInfoDecodedPayload implements jwt.Claims
 var _ jwt.Claims = JWSRenewalInfoDecodedPayload{}
 
@@ -177,6 +185,8 @@ type JWSRenewalInfoDecodedPayload struct {
 	OfferDiscountType           OfferDiscountType           `json:"offerDiscountType,omitempty"`
 	EligibleWinBackOfferIds     []string                    `json:"eligibleWinBackOfferIds,omitempty"`
 	AdvancedCommerceInfo        AdvancedCommerceRenewalInfo `json:"advancedCommerceInfo,omitempty"`
+	CommitmentInfo              RenewalCommitmentInfo       `json:"commitmentInfo,omitempty"`
+	RenewalBillingPlanType      BillingPlanType             `json:"renewalBillingPlanType,omitempty"`
 }
 
 // GetAudience implements jwt.Claims.
