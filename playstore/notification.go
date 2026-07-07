@@ -105,10 +105,10 @@ type VoidedPurchaseNotification struct {
 type PendingRefundReviewNotification struct {
 	Version             string `json:"version"`
 	PendingRefundToken  string `json:"pendingRefundToken"`
-	OrderId             string `json:"orderId"`
+	OrderID             string `json:"orderId"`
 	RefundReason        int    `json:"refundReason"`
-	ObfuscatedAccountId string `json:"obfuscatedAccountId"`
-	ObfuscatedProfileId string `json:"obfuscatedProfileId"`
+	ObfuscatedAccountID string `json:"obfuscatedAccountId"`
+	ObfuscatedProfileID string `json:"obfuscatedProfileId"`
 }
 
 // TestNotification is the test publish that are sent only through the Google Play Developer Console
