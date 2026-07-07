@@ -62,13 +62,14 @@ type DeveloperNotification struct {
 // Detailed description is following.
 // https://developer.android.com/google/play/billing/rtdn-reference#json_specification
 type DeveloperNotificationV2 struct {
-	Version                    string                      `json:"version"`
-	PackageName                string                      `json:"packageName"`
-	EventTimeMillis            string                      `json:"eventTimeMillis"`
-	SubscriptionNotification   *SubscriptionNotification   `json:"subscriptionNotification,omitempty"`
-	OneTimeProductNotification *OneTimeProductNotification `json:"oneTimeProductNotification,omitempty"`
-	VoidedPurchaseNotification *VoidedPurchaseNotification `json:"voidedPurchaseNotification,omitempty"`
-	TestNotification           *TestNotification           `json:"testNotification,omitempty"`
+	Version                         string                           `json:"version"`
+	PackageName                     string                           `json:"packageName"`
+	EventTimeMillis                 string                           `json:"eventTimeMillis"`
+	SubscriptionNotification        *SubscriptionNotification        `json:"subscriptionNotification,omitempty"`
+	OneTimeProductNotification      *OneTimeProductNotification      `json:"oneTimeProductNotification,omitempty"`
+	VoidedPurchaseNotification      *VoidedPurchaseNotification      `json:"voidedPurchaseNotification,omitempty"`
+	PendingRefundReviewNotification *PendingRefundReviewNotification `json:"pendingRefundReviewNotification,omitempty"`
+	TestNotification                *TestNotification                `json:"testNotification,omitempty"`
 }
 
 // SubscriptionNotification has subscription status as notificationType, token and subscription id
@@ -98,6 +99,16 @@ type VoidedPurchaseNotification struct {
 	OrderID       string                    `json:"orderId"`
 	ProductType   VoidedPurchaseProductType `json:"productType"`
 	RefundType    VoidedPurchaseRefundType  `json:"refundType"`
+}
+
+// PendingRefundReviewNotification
+type PendingRefundReviewNotification struct {
+	Version             string `json:"version"`
+	PendingRefundToken  string `json:"pendingRefundToken"`
+	OrderId             string `json:"orderId"`
+	RefundReason        int    `json:"refundReason"`
+	ObfuscatedAccountId string `json:"obfuscatedAccountId"`
+	ObfuscatedProfileId string `json:"obfuscatedProfileId"`
 }
 
 // TestNotification is the test publish that are sent only through the Google Play Developer Console
